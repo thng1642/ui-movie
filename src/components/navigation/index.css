@@ -1,0 +1,28 @@
+.nav-bar {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-color: black; */
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+#log-nav {
+    width: 80px;
+}
+#log-nav:hover, #search-btn:hover {
+    cursor: pointer;
+}
+#log-nav > img {
+    object-fit: cover;
+    width: 100%;
+}
+#search-btn {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}

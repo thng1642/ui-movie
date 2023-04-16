@@ -1,0 +1,10 @@
+.poster {
+    min-width: 200px;
+    height: 100%;
+    position: relative;
+}
+.poster > img {
+    position: relative;
+    width: 100%;
+    object-fit: cover;
+}
