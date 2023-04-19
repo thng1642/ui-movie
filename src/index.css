@@ -12,16 +12,34 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
 }
-
+/* Scroll bar */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 6px;
+	background-color: #0f0f0f;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 6px;
+	background-color: rgba(68, 64, 64, 0.938);
+}
 .center-container {
-	max-width: 1280px;
-	margin: 0 auto;
+	width: 100%;
+	padding: 0 80px;
 }
 .mb-8 {
 	margin-bottom: 8px;
 }
 .mb-12 {
 	margin-bottom: 12px;
+}
+.ml-12 {
+	padding-left: 12px;
+}
+.ml-16 {
+	margin-left: 16px;
+}
+.ml-32 {
+	margin-left: 32px;
 }
 .mb-16 {
 	margin-bottom: 16px;
@@ -31,4 +49,18 @@ code {
 }
 .mb-32 {
 	margin-bottom: 32px;
+}
+.mb-64 {
+	margin-bottom: 64px;
+}
+.hidden {
+	display: none !important;
+}
+.white-text {
+	color: #fff;
+}
+.nav-bg-color-black {
+	position: fixed !important;
+	top: 100px;
+	background-color: rgba(21, 21, 20, 0.603) !important;
 }

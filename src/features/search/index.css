@@ -1,0 +1,14 @@
+
+.list-result {
+    width: calc(100% - 32px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    row-gap: 24px;
+    margin-left: 32px;
+}
+.list-result img {
+    width: 160px;
+    object-fit: cover;
+}

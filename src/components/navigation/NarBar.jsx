@@ -1,8 +1,17 @@
 // @flow
 import * as React from 'react';
 import './index.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function NarBar() {
+
+    const navigate = useNavigate();
+
+    const handleSearchBtn = function() {
+        
+        navigate('/search')
+    }
+
     return (
         <nav className='center-container nav-bar'>
             {/* Logo */}
@@ -10,7 +19,7 @@ export default function NarBar() {
                 <img src='https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg' alt='logo'></img>
             </div>
             {/* Search icon */}
-            <div id='search-btn'>
+            <div className='search-btn' onClick={handleSearchBtn}>
                 <svg
                     className='svg-inline--fa fa-search fa-w-16'
                     fill='#ccc'

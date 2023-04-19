@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* background-color: black; */
+    background-color: transparent;
     position: relative;
     display: flex;
     align-items: center;
@@ -20,7 +20,7 @@
     object-fit: cover;
     width: 100%;
 }
-#search-btn {
+.search-btn {
     display: inline-block;
     width: 40px;
     height: 40px;

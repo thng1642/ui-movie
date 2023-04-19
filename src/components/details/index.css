@@ -1,0 +1,36 @@
+.movie-detail {
+    width: 100%;
+    height: 448px;
+    background-color: rgb(21, 21, 20);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 24px;
+    column-gap: 24px
+}
+.movie-detail h3 {
+    padding-top: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1.3px solid #fff;
+}
+.general-info p {
+    margin-bottom: 0;
+}
+.youtube {
+    margin: 24px 0;
+    border-radius: 12px;
+}
+/* Hover animation card and poster */
+.animation-hover:hover {
+    cursor: pointer;
+    transform:  scale(1.125);
+}
+/* when scroll navbar change background color */
+.nav-bg-color-black {
+    top: 0;
+    position: fixed;
+    background-color: rgba(20, 20, 20, 0.836);
+}
+.nav-bg-color-transparent {
+    background-color: transparent;
+}
