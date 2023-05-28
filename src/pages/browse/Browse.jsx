@@ -7,6 +7,7 @@ import { Poster } from '../../components/poster/Poster';
 import { api_key, url, urlImg } from '../../constants/endpoint/movieApi';
 import './index.css';
 import { DetailProvider } from '../../context/DetailContext';
+import MovieApi from '../../features/api/MovieApi';
 
 function Browse() {
 
@@ -25,7 +26,7 @@ function Browse() {
 		.then((res) => res.json())
 		.then((res)=>{
 			setMovieTrend(res.results)
-			console.log("Response: ", res);
+			// console.log("Response: ", res);
 		})
 		
 	}, [])
@@ -42,47 +43,116 @@ function Browse() {
 
 	useEffect(()=>{
 		
-			const fetchMoviesTrending = async () => {
-				const [response, error] = await getTrending('trending');	
-				// console.log("Responsive: ", response);
-				setListTrend([...response])
+			// Third API
+			// const fetchMoviesTrending = async () => {
+			// 	const [response, error] = await getTrending('trending');	
+			// 	// console.log("Responsive: ", response);
+			// 	setListTrend([...response])
 				
+			// }
+			/**
+			 * Get list movies trending on server
+			 */
+			const fetchMoviesTrending = async () => {
+				const [response, error] = await MovieApi('/trending?userId=User 01&token=8qlOkxz4wq', 'GET')
+				
+				if ( response ) {
+
+					// console.log("Response", response)
+					setListTrend([...response.results])
+				} else {
+					console.log("Error trending: ", error.data)
+				}
 			}
 			fetchMoviesTrending()
 
+			// Getting top rate movies from server
 			const fetchTopMovies = async () => {
-				const [response, error] = await getTopRate()
-				setListTop([...response])
+
+				const [response, error] = await MovieApi('/top-rate?userId=User 01&token=8qlOkxz4wq', 'GET')
+				
+				if ( response ) {
+
+					// console.log("Response Top rate", response)
+					setListTop([...response.results])
+				} else {
+					console.log("Error trending: ", error.data)
+				}
 			}
 			fetchTopMovies()
 
+			// get movies action with id 28
 			const fetchingActionMovies = async () => {
-				const [response, error] = await getActionMovies()
-				setActionMovies([...response])
+				const [response, error] = await MovieApi('/discover?genre=28&page=1&userId=User 01&token=8qlOkxz4wq', 'GET')
+
+				if ( response ) {
+
+					// console.log("Response Action movies", response)
+					
+					setActionMovies([...response.results])
+				} else {
+					console.log("Error trending: ", error.data)
+				}
 			}
 			fetchingActionMovies()
 			
+			// Get movies comedy with id 35
 			const fetchingComedyMovies = async () => {
-				const [response, error] = await getComedyMovies()
-				setComedyMovies([...response])
+
+				const [response, error] = await MovieApi('/discover?genre=35&page=1&userId=User 01&token=8qlOkxz4wq', 'GET')
+
+				if ( response ) {
+
+					// console.log("Response Action movies", response)
+					
+					setComedyMovies([...response.results])
+				} else {
+					console.log("Error trending: ", error.data)
+				}
 			}
 			fetchingComedyMovies()
 
+			// Get movies horror with id 27
 			const fetchingHorrorMovies = async () => {
-				const [response, error] = await getHorrorMovies()
-				setHorrorMovies([...response])
+				const [response, error] = await MovieApi('/discover?genre=27&page=1&userId=User 01&token=8qlOkxz4wq', 'GET')
+
+				if ( response ) {
+
+					// console.log("Response Action movies", response)
+					
+					setHorrorMovies([...response.results])
+				} else {
+					console.log("Error trending: ", error.data)
+				}
 			}
 			fetchingHorrorMovies()
 			
+			// Get movies Romance with id 10749
 			const fetchingRomanceMovies = async () => {
-				const [response, error] = await getRomanceMovies()
-				setRomanceMovies([...response])
+
+				const [response, error] = await MovieApi('/discover?genre=10749&page=1&userId=User 01&token=8qlOkxz4wq', 'GET')
+
+				if ( response ) {
+
+					// console.log("Response Action movies", response)
+					setRomanceMovies([...response.results])
+				} else {
+					console.log("Error trending: ", error.data)
+				}
 			}
 			fetchingRomanceMovies()
 			
+			// Get movies documentaries with id 99
 			const fetchingDocumentariesMovies = async () => {
-				const [response, error] = await getDocumentariesMovies()
-				setDocumentaries([...response])
+				const [response, error] = await MovieApi('/discover?genre=99&page=1&userId=User 01&token=8qlOkxz4wq', 'GET')
+
+				if ( response ) {
+
+					console.log("Response Documentaries movies", response)
+					setDocumentaries([...response.results])
+				} else {
+					console.log("Error trending: ", error.data)
+				}
 			}
 			fetchingDocumentariesMovies()
 		
