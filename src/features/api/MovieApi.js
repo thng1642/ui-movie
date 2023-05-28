@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export default function TrendApi(endpoint, method) {
+export default function MovieApi(endpoint, method, data) {
     
-    const baseUrl = 'https://api.themoviedb.org/3/';
+    const baseUrl = 'http://localhost:5000/api/movies';
     
     const header = {
         "Content-Type": 'application/json',
@@ -13,18 +13,18 @@ export default function TrendApi(endpoint, method) {
             headers: header,
             method: method,
             url: baseUrl + endpoint,
+            data: data,
         }
     ).then(
         responsive => {
             const result = responsive.data
-            console.log("Results: ", result)
+            // console.log("Results: ", result)
             return [result, null]
         }
     ).catch(error => {
-        if (error.response) {
-
-            const errorRes = error.response;
-        }
+        // if (error.response) {      
+        //     const errorRes = error.response;
+        // }
         
         return [null, error.response]
     })

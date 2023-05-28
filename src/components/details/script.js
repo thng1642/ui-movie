@@ -67,7 +67,9 @@ export function getDetailsMovie(id) {
 
     // return results
 }
-
+/**
+ * Third-API  
+ */
 export function getTrending(action) {
     return axios({
         method: GET,

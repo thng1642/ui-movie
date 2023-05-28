@@ -1,21 +1,115 @@
-
-// @flow
 import * as React from 'react';
-import './index.css'
-import { searchMovies } from '../details/script';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 import { ResultContext } from '../../context/ResultContext';
+import MovieApi from '../../features/api/MovieApi';
+import './index.css';
 
 export default function SearchBox() {
 
-
     const [search, setSearch] = React.useState(null)
-
     const {setResults} = React.useContext(ResultContext)
+    const [genres, setGenres] = React.useState([])
+    const [genreId, setGenreId] = React.useState('')
+    const listMedia =
+        [
+            {
+                key : "all",
+                value: "All"
+            },
+            {
+                key: "movie",
+                value: "Movie"
+            },
+            {
+                key: "tv",
+                value: 'TV'
+            },
+            {
+                key: "person",
+                value: "Person"
+            }
+        ]
+    const languages = [
+        {
+            key: "en-us",
+            value: "English"
+        },
+        {
+            key: "jp",
+            value: "Japanese"
+        },
+        {
+            key: "kr",
+            value: "Korea"
+        }
+    ]
+    const [year, setYear] = React.useState('')
+    const [language, setLanguage] = React.useState('')
+    const [media, setMedia] = React.useState('')
 
     const sendSearchKey = function() {
 
-        console.log("Search Key: ", search);
+        console.log("Search Key: ", genreId, media, language, year)
+
+        if (search === null || search === '') {
+
+            const input = document.querySelector('.search-bar').querySelector('input')
+
+            input.focus()
+        } else {
+            const content = {
+                "keyword": search,
+                "genre": genreId,
+                "media": media,
+                "language": language,
+                "year": year 
+            }
+            //  Call api
+            const fetchingSearch = async () => {
+
+                const [res, err] = await MovieApi('/search?userId=User 01&token=8qlOkxz4wq', "POST", content)
+
+                // const [res, error] = await searchMovies(search)
+                if ( res ) {
+
+                    // console.log("Response: ", res.results)
+                    if (res.results.length === 0) {
+                        setResults(null)
+                    } else {
+                        setResults([...res.results])
+                    }
+                } else {
+                    console.log("Error: ", err.data)
+                }
+
+                // setResults([...res])
+            }
+            fetchingSearch()
+        }
     }
+
+    const handleChangeGenre = (event) => {
+        setGenreId(event.target.value);
+    }
+
+    const handleChangeMedia = (event) => {
+        setMedia(event.target.value)
+    }
+    React.useEffect(() =>{
+        // Get all genres
+        const fetchingGenres = async () => {
+            const [response] = await MovieApi('/genres?userId=User 01&token=8qlOkxz4wq', "GET")
+            if ( response ) {
+                // console.log(response)
+                setGenres([...response])
+            }
+        }
+        fetchingGenres()
+    }, [])
 
     return (
         <div className='search-box mb-64'>
@@ -42,7 +136,97 @@ export default function SearchBox() {
                     </svg>
                 </div>
             </div>
-            
+            {/* Filter bar */}
+            <div className='filter-bar'>
+                {/* Genre */}
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <InputLabel id="select-genre-label">Genre</InputLabel>
+                    <Select
+                        labelId="select-genre-label"
+                        id="select-genre"
+                        value={genreId}
+                        label="Genre"
+                        onChange={handleChangeGenre}
+                    >
+                        <MenuItem value="">
+                        <em>None</em>
+                        </MenuItem>
+                        {
+                        genres.map((value, index) => (
+                            
+                            <MenuItem key={index} value={value.id}>{value.name}</MenuItem>
+                        ))
+                        }
+                    </Select>
+                </FormControl>
+                {/* Media Type */}
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <InputLabel id="select-media-label">Media</InputLabel>
+                    <Select
+                        labelId="select-media-label"
+                        id="select-media"
+                        value={media}
+                        label="Media"
+                        onChange={handleChangeMedia}
+                    >
+                        <MenuItem value="">
+                        <em>None</em>
+                        </MenuItem>
+                        {
+                        listMedia.map((value, index) => (
+                            
+                            <MenuItem key={index} value={value.key}>{value.value}</MenuItem>
+                        ))
+                        }
+                    </Select>
+                </FormControl>
+                {/* Languages */} 
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <InputLabel id="select-language-label">Language</InputLabel>
+                    <Select
+                        labelId="select-language-label"
+                        id="select-language"
+                        value={language}
+                        label="Language"
+                        onChange={(event) => {
+                            setLanguage(event.target.value)
+                        }}
+                    >
+                        <MenuItem value="">
+                        <em>None</em>
+                        </MenuItem>
+                        {
+                        languages.map((value, index) => (
+                            
+                            <MenuItem key={index} value={value.key}>{value.value}</MenuItem>
+                        ))
+                        }
+                    </Select>
+                </FormControl>
+                {/* Year */}
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <InputLabel id="select-year-label">Year</InputLabel>
+                    <Select
+                        labelId="select-year-label"
+                        id="select-year"
+                        value={year}
+                        label="Year"
+                        onChange={(event) => {
+                            setYear(event.target.value)
+                        }}
+                    >
+                        <MenuItem value="">
+                        <em>None</em>
+                        </MenuItem>
+                        <MenuItem value= "2019">2019</MenuItem>                    
+                        <MenuItem value= "2020">2020</MenuItem>                    
+                        <MenuItem value= "2021">2021</MenuItem>                    
+                        <MenuItem value= "2022">2022</MenuItem>                    
+                        <MenuItem value= "2023">2023</MenuItem>                    
+                    </Select>
+                </FormControl>
+            </div>
+
             {/* Action bar */}
             <div className='action-bar'>
 
@@ -58,27 +242,7 @@ export default function SearchBox() {
                 >Reset</button>
 
                 <button type='button' className='action-send'
-                    onClick={()=>{
-                        
-                        if (search === null || search === '') {
-
-                            const input = document.querySelector('.search-bar').querySelector('input')
-
-                            input.focus()
-                        } else {
-                            //  Call api
-                            const fetchingSearch = async () => {
-
-                                const [res, error] = await searchMovies(search)
-
-                                // console.log("Response: ", res);
-
-                                setResults([...res])
-                            }
-                            fetchingSearch()
-                        }
-                        
-                    }}
+                    onClick={ sendSearchKey }
                 >Search</button>
                 
             </div>
